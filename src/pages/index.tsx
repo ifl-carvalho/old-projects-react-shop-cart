@@ -23,8 +23,8 @@ const Index: NextPage<IndexProps> = ({ cartData }) => {
       </Head>
       <CartProvider cartData={cartData.over}>
         <main className={styles.index}>
-          <Cart />
           <Buttons cartData={cartData} />
+          <Cart />
         </main>
       </CartProvider>
     </>
