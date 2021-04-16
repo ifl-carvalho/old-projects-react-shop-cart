@@ -3,12 +3,16 @@ import Head from 'next/head'
 
 import { CartProvider, CartData } from '../contexts/CartContext'
 
+import Buttons from '../components/Buttons'
 import Cart from '../components/Cart'
 
 import styles from '../styles/pages/index.module.scss'
 
 interface IndexProps {
-  cartData: CartData[]
+  cartData: {
+    over: CartData[]
+    bellow: CartData[]
+  }
 }
 
 const Index: NextPage<IndexProps> = ({ cartData }) => {
@@ -17,8 +21,9 @@ const Index: NextPage<IndexProps> = ({ cartData }) => {
       <Head>
         <title>Create Next App</title>
       </Head>
-      <CartProvider cartData={cartData}>
+      <CartProvider cartData={cartData.over}>
         <main className={styles.index}>
+          <Buttons cartData={cartData} />
           <Cart />
         </main>
       </CartProvider>
@@ -34,7 +39,17 @@ export const getServerSideProps: GetServerSideProps = async () => {
   const response = await fetch(`${cartApi}`)
   const responseJson = await response.json()
 
-  const data = responseJson['items'].map((item) => {
+  const dataOver = responseJson.over['items'].map((item) => {
+    return {
+      id: item['id'],
+      name: item['name'],
+      price: item['price'],
+      sellingPrice: item['sellingPrice'],
+      image: item['imageUrl'],
+    }
+  })
+
+  const dataBellow = responseJson.bellow['items'].map((item) => {
     return {
       id: item['id'],
       name: item['name'],
@@ -46,7 +61,10 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   return {
     props: {
-      cartData: data,
+      cartData: {
+        over: dataBellow,
+        bellow: dataOver,
+      },
     },
   }
 }

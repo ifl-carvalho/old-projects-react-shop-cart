@@ -22,19 +22,20 @@ export interface CartContextData {
 export const CartContext = createContext({} as CartContextData)
 
 export const CartProvider: NextPage<CartProviderProps> = function ({ children, cartData }) {
-  const setCartData = (data: CartData[]): void => {
-    setCartDataState({ ...cartDataState, cartData: data })
-  }
+  const [cartDataState, setCartDataState] = useState<CartData[]>(cartData)
 
-  const [cartDataState, setCartDataState] = useState({
-    cartData: cartData,
-    setCartData: setCartData,
-  })
+  const setCartData = (newCartData: CartData[]): void => {
+    setCartDataState(newCartData)
+  }
 
   /* 
   Funções para remover e adcionar items no cart alterar o contexto local
   e atualizar a mudança na API ( Para poder acessar o carrinho com por toda aplicação )
   */
 
-  return <CartContext.Provider value={cartDataState}>{children}</CartContext.Provider>
+  return (
+    <CartContext.Provider value={{ cartData: cartDataState, setCartData: setCartData }}>
+      {children}
+    </CartContext.Provider>
+  )
 }
