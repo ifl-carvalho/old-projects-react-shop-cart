@@ -23,8 +23,8 @@ const Index: NextPage<IndexProps> = ({ cartData }) => {
       </Head>
       <CartProvider cartData={cartData.over}>
         <main className={styles.index}>
-          <Buttons cartData={cartData} />
           <Cart />
+          <Buttons cartData={cartData} />
         </main>
       </CartProvider>
     </>
@@ -62,8 +62,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: {
       cartData: {
-        over: dataBellow,
-        bellow: dataOver,
+        over: dataOver,
+        bellow: dataBellow,
       },
     },
   }
