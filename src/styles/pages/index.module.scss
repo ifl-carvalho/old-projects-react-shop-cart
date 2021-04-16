@@ -1,0 +1,36 @@
+.index {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    width: 100vw;
+    height: 100vh;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    > button {
+        padding: 15px;
+        margin: 5px;
+
+        font-size: 1.6rem;
+
+        border-radius: 15px;
+
+        color: #ffffff;
+        background-color: #3b74f2;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .buttons {
+        > button {
+            font-size: 1.3rem;
+        }
+    }
+}
